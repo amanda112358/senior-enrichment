@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: flex-end;
+  background-color: darkslateblue;
+}
+
+.nav-item {
+  padding: 1em;
+}
+
+a {
+  color: lightgray;
+  transform: translate(0,0);
+  transition: all;
+}
+
+a:hover {
+  text-decoration: none;
+  color: lightgreen;
+  transform: translate(-1em, 0);
+}
+
+.campuses-container {
+  display: flex;
+  background-color: green;
+  justify-content: center;
+}
+
+.campus {
+  background-color: blue;
+  padding: 1em;
+  margin: 1em;
+}
+
+body {
+  background-color: grey;
+}

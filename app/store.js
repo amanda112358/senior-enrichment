@@ -62,6 +62,18 @@ export const createStudent = (studentName) => {
 
 // THUNK CREATORS
 
+export function fetchCampuses () {
+
+    return function thunk (dispatch) {
+      return axios.get('/api/campuses')
+        .then(res => res.data)
+        .then(campuses => {
+          const action = getCampuses(campuses);
+          dispatch(action);
+        });
+    }
+  }
+
 export function fetchStudents () {
 
   return function thunk (dispatch) {
