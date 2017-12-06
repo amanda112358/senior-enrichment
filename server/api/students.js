@@ -23,3 +23,29 @@ studentRouter.get('/:studentId', (req, res, next) => {
   .then(student => res.json(student))
   .catch(next);
 })
+
+
+// POST /api/students
+studentRouter.post('/', function (req, res, next) {
+  Student.create(req.body)
+    .then(student => res.json(student))
+    .catch(next);
+});
+
+// PUT /api/students
+studentRouter.put('/:studentId', function (req, res, next) {
+  const id = req.params.studentId;
+
+  Student.update(req.body, { where: { id } })
+    .then(() => res.status(204).end())
+    .catch(next);
+});
+
+// DELETE /api/students
+studentRouter.delete('/:studentId', function (req, res, next) {
+  const id = req.params.studentId;
+
+  Student.destroy({ where: { id } })
+    .then(() => res.status(204).end())
+    .catch(next);
+});
