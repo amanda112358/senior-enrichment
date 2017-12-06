@@ -1,5 +1,5 @@
 import axios from 'axios';
-import socket from '../socket';
+// import socket from '../socket';
 
 
 // ACTION TYPES
@@ -49,7 +49,7 @@ export function fetchStudents () {
     return function thunk (dispatch) {
       return axios.get('/api/students')
         .then(res => res.data)
-        .then(campuses => {
+        .then(students => {
           const action = getStudents(students);
           dispatch(action);
         });

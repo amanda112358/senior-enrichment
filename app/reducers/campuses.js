@@ -1,5 +1,5 @@
 import axios from 'axios';
-import socket from '../socket';
+// import socket from '../socket';
 
 
 // ACTION TYPES
@@ -26,7 +26,7 @@ export const getCampus = (campus) => {
 
 // REDUCER
 
-export default function campusReducer(state = [], action) {
+export default function campusReducer (state = [], action) {
 
   switch (action.type) {
 

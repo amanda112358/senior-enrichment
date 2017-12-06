@@ -11,6 +11,6 @@ export const createCampus = (studentName) => {
 }
 
 // REDUCER
-export default newStudentReducer(state = '', action) {
+export default function newStudentReducer(state = '', action) {
   return action.type === CREATE_STUDENT ? action.studentName : state;
 }
