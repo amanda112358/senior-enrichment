@@ -7,7 +7,7 @@ module.exports = campusRouter;
 
 // GET /api/campuses/
 campusRouter.get('/', (req, res, next) => {
-  Campus.findAll()
+  Campus.findAll({include: [Student]})
   .then(campuses => res.json(campuses))
   .catch(next);
 });
@@ -22,6 +22,13 @@ campusRouter.get('/:campusId', (req, res, next) => {
   })
   .then(campus => res.json(campus))
   .catch(next);
+});
+
+// POST /api/campuses
+campusRouter.post('/', function (req, res, next) {
+  Campus.create(req.body)
+    .then(campus => res.json(campus))
+    .catch(next);
 });
 
 // PUT /api/campuses

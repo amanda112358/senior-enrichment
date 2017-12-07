@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
-import Navbar from './Navbar';
-import Campuses from './Campuses';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 
 export default function Home (props) {
+
   return (
     <div>
-      <Navbar />
-      <Campuses />
+      <h1>Welcome Home!</h1>
+      <Link to={`/new-campus`}>Add New Campus</Link>
+      <Link to={`/new-student`}>Add New Student</Link>
     </div>
   )
 }

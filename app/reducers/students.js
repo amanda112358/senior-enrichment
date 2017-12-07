@@ -58,15 +58,16 @@ export function fetchStudents () {
 
 export function postStudent (studentName, history) {
 
-    return function thunk (dispatch) {
+      return function thunk (dispatch) {
 
-      return axios.post('/api/students', {name: studentName})
-        .then(res => res.data)
-        .then(newStudent => {
-          const action = getStudent(newStudent);
-          dispatch(action);
-          // socket.emit('new-student', newStudent);
-          // history.push(`/students/${newStudent.id}`);
-        });
-    }
-}
+        return axios.post('/api/students', {name: studentName})
+          .then(res => res.data)
+          .then(newStudent => {
+            const action = getStudent(newStudent);
+            dispatch(action);
+            // socket.emit('new-student', newStudent);
+            // history.push(`/students/${newStudent.id}`);
+          });
+      }
+  }
+

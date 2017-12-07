@@ -7,7 +7,7 @@ module.exports = studentRouter;
 
 // GET /api/students/
 studentRouter.get('/', (req, res, next) => {
-  Student.findAll()
+  Student.findAll({include: [Campus]})
   .then(students => res.json(students))
   .catch(next);
 })
@@ -23,7 +23,6 @@ studentRouter.get('/:studentId', (req, res, next) => {
   .then(student => res.json(student))
   .catch(next);
 })
-
 
 // POST /api/students
 studentRouter.post('/', function (req, res, next) {

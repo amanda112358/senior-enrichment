@@ -23,6 +23,35 @@ export const getCampus = (campus) => {
   }
 }
 
+// THUNK CREATORS
+
+export function fetchCampuses () {
+
+      return function thunk (dispatch) {
+        return axios.get('/api/campuses')
+          .then(res => res.data)
+          .then(campuses => {
+            const action = getCampuses(campuses);
+            dispatch(action);
+          });
+      }
+  }
+
+export function postCampus (campus, history) {
+
+    return function thunk (dispatch) {
+
+      return axios.post('/api/campuses', campus)
+        .then(res => res.data)
+        .then(newCampus => {
+          const action = getCampus(newCampus);
+          dispatch(action);
+          // socket.emit('new-student', newStudent);
+          // history.push(`/students/${newStudent.id}`);
+        });
+    }
+}
+
 
 // REDUCER
 
@@ -41,31 +70,3 @@ export default function campusReducer (state = [], action) {
   }
 }
 
-// THUNK CREATORS
-
-export function fetchCampuses () {
-
-      return function thunk (dispatch) {
-        return axios.get('/api/campuses')
-          .then(res => res.data)
-          .then(campuses => {
-            const action = getCampuses(campuses);
-            dispatch(action);
-          });
-      }
-  }
-
-export function postCampus (campusName, history) {
-
-    return function thunk (dispatch) {
-
-      return axios.post('/api/campuses', {name: campusName})
-        .then(res => res.data)
-        .then(newCampus => {
-          const action = getCampus(newCampus);
-          dispatch(action);
-          // socket.emit('new-student', newStudent);
-          // history.push(`/students/${newStudent.id}`);
-        });
-    }
-}

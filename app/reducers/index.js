@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import campuses from './campuses';
 import students from './students';
-import newCampusEntry from './newCampusEntry';
-import newStudentEntry from './newStudentEntry';
+import campusEntry from './campusEntry';
+import studentEntry from './studentEntry';
 
 
 // COMBINE REDUCERS
@@ -10,8 +10,13 @@ import newStudentEntry from './newStudentEntry';
 const rootReducer = combineReducers({
   campuses,
   students,
-  newCampusEntry,
-  newStudentEntry
+  campusEntry,
+  studentEntry
 })
 
 export default rootReducer;
+
+export * from './campuses';
+export * from './students';
+export * from './campusEntry';
+export * from './studentEntry';
