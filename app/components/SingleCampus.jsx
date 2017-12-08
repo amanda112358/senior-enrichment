@@ -11,12 +11,12 @@ function SingleCampus (props) {
   return campus
   ? (
     <div>
+      <Link to={`/campuses/${campus.id}/edit-campus`}>Edit</Link>
       <ul>
         <li>Selected Campus: {campus.name}</li>
         <li>Description: {campus.description}</li>
       </ul>
       <img src={`${campus.imgUrl}`} />
-      <Link to={`/campuses/${campus.id}/edit-campus`}>Edit</Link>
       <Students students={campus.students} />
     </div>
   )

@@ -1,21 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { destroyStudent } from '../reducers';
+import store from '../store'
 
-const Students = (props) => {
-  console.log(props)
-  return (
-    <div>
-      <ul>
-        {props.students.map(student =>
-        (<div key={student.id}>
-          <Link to={`/students/${student.id}`} >Name: {student.name}</Link>
-        </div>)
-        )}
-      </ul>
-      <Link to={`/new-student`}>Add New Student</Link>
-    </div>
-  )
+class Students extends Component {
+  constructor() {
+    super();
+    this.deleteStudent = this.deleteStudent.bind(this);
+  }
+
+  deleteStudent(studentId) {
+    console.log(studentId);
+    store.dispatch(destroyStudent(studentId));
+  }
+
+  render() {
+
+    const { students } = this.props;
+
+    return (
+      <div>
+        <h1>Students</h1>
+        <ul>
+          {students.map(student =>
+          (<div key={student.id}>
+            <Link to={`/students/${student.id}`} >Name: {student.name}</Link>
+            <button key={student.id} onClick={() => this.deleteStudent(student.id)}>X</button>
+          </div>)
+          )}
+        </ul>
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = function (state, ownProps) {

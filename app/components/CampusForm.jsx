@@ -8,7 +8,6 @@ class CampusForm extends Component {
     this.props.setInput(this.props.campus);
   }
 
-
   render() {
     const {
       campusEntry,

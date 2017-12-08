@@ -2,6 +2,7 @@
 
 const Sequelize = require('sequelize');
 const db = require('../index');
+const Student = db.model('student');
 
 const Campus = db.define('campus', {
   name: {

@@ -15,6 +15,7 @@ function SingleStudent (props) {
           <li>Campus: <Link to={`/campuses/${student.campus.id}`}>{student.campus.name}</Link></li>
           <li>GPA: {student.gpa}</li>
         </ul>
+        <Link to={`/students/${student.id}/edit-student`}>Edit</Link>
       </div>
     )
     : <h1>Loading...</h1>
