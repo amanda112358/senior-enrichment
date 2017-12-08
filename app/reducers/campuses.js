@@ -37,11 +37,11 @@ export function fetchCampuses () {
       }
   }
 
-export function postCampus (campus, history) {
+export function postCampus (campusData) {
 
     return function thunk (dispatch) {
 
-      return axios.post('/api/campuses', campus)
+      return axios.post('/api/campuses', campusData)
         .then(res => res.data)
         .then(newCampus => {
           const action = getCampus(newCampus);
@@ -52,11 +52,11 @@ export function postCampus (campus, history) {
     }
 }
 
-export function putCampus (campus, history) {
+export function putCampus (campusData, campusId) {
 
     return function thunk (dispatch) {
 
-      return axios.put(`/api/campuses/${campus.id}`, campus)
+      return axios.put(`/api/campuses/${campusId}`, campusData)
         .then(res => res.data)
         .then(updatedCampus => {
           const action = getCampus(updatedCampus);

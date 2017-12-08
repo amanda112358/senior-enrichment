@@ -4,11 +4,7 @@ import { postCampus, writeCampusName, writeCampusDescription } from '../reducers
 import CampusForm from './CampusForm';
 
 
-class NewCampus extends Component {
-
-  componentDidMount() {
-    this.props.setInputToEmpty();
-  }
+export default class NewCampus extends Component {
 
   render() {
     return (
@@ -20,14 +16,3 @@ class NewCampus extends Component {
     )
   }
 }
-
-const mapDispatchToProps = function (dispatch) {
-  return {
-    setInputToEmpty () {
-      dispatch(writeCampusName(''));
-      dispatch(writeCampusDescription(''));
-    }
-  };
-};
-
-export default connect(null, mapDispatchToProps)(NewCampus);

@@ -6,29 +6,25 @@ import CampusForm from './CampusForm';
 
 class EditCampus extends Component {
 
-  componentDidMount() {
-    this.props.setInputToExisiting();
-  }
-
   render() {
     return (
       <CampusForm
+        campus={this.props.campus}
         label={`Edit Campus`}
         postOrPut={putCampus}
-        buttonText={'Done'}
+        buttonText={'Submit Changes'}
       />
     )
   }
 }
 
-const mapDispatchToProps = function (dispatch, ownProps) {
+const mapStateToProps = function (state, ownProps) {
+  const campusId = Number(ownProps.match.params.campusId);
+  const campusToEdit = state.campuses.find(campus => campus.id === campusId)
   return {
-    setInputToExisiting() {
-      // // const campusToEdit =
-      // dispatch(writeCampusName(campusToEdit.name));
-      // dispatch(writeCampusDescription(campusToEdit.description));
-    }
+    campus: campusToEdit
   };
 };
 
-export default connect(null, mapDispatchToProps)(EditCampus);
+
+export default connect(mapStateToProps)(EditCampus);
