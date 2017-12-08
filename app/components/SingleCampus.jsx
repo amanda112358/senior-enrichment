@@ -5,6 +5,12 @@ import Students from './Students';
 
 
 function SingleCampus (props) {
+
+  const campusId = Number(props.match.params.campusId);
+  const selectedCampus = props.campuses.find(campus => campus.id === campusId);
+  console.log('!!', campusId);
+  console.log(selectedCampus);
+
   return (
     <div>
       <ul>
@@ -12,7 +18,7 @@ function SingleCampus (props) {
         <li>Description: {selectedCampus.description}</li>
       </ul>
       <img src={`${selectedCampus.imgUrl}`} />
-      <Link to={`/campuses/${campus.id}/edit-campus`}>Edit</Link>
+      <Link to={`/campuses/${selectedCampus.id}/edit-campus`}>Edit</Link>
       <Students students={selectedCampus.students} />
     </div>
   )

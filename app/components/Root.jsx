@@ -9,8 +9,8 @@ import SingleCampus from './SingleCampus';
 import SingleStudent from './SingleStudent';
 import Campuses from './Campuses';
 import Home from './Home';
-import CampusForm from './CampusForm';
-import StudentForm from './StudentForm';
+import NewCampus from './NewCampus';
+import EditCampus from './EditCampus';
 
 export default class Root extends Component {
 
@@ -30,9 +30,8 @@ export default class Root extends Component {
           <Route path="/students/:studentId" component={SingleStudent} />
           <Route exact path="/campuses" component={Campuses} />
           <Route exact path="/campuses/:campusId" component={SingleCampus} />
-          <Route path="/new-campus" component={CampusForm} />
-          <Route path="/new-student" component={StudentForm} />
-          <Route path="/campuses/:campusId/edit-campus" component={CampusForm} />
+          <Route path="/new-campus" component={NewCampus} />
+          <Route path="/campuses/:campusId/edit-campus" component={EditCampus} />
           <Route component={Home} />
         </Switch>
       </div>

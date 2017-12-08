@@ -31,7 +31,7 @@ campusRouter.post('/', function (req, res, next) {
     .catch(next);
 });
 
-// PUT /api/campuses
+// PUT /api/campuses/:campusId
 campusRouter.put('/:campusId', function (req, res, next) {
   const id = req.params.campusId;
 

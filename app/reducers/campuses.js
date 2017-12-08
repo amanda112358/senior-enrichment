@@ -52,6 +52,21 @@ export function postCampus (campus, history) {
     }
 }
 
+export function putCampus (campus, history) {
+
+    return function thunk (dispatch) {
+
+      return axios.put(`/api/campuses/${campus.id}`, campus)
+        .then(res => res.data)
+        .then(updatedCampus => {
+          const action = getCampus(updatedCampus);
+          dispatch(action);
+          // socket.emit('new-student', newStudent);
+          // history.push(`/students/${newStudent.id}`);
+        });
+    }
+}
+
 
 // REDUCER
 

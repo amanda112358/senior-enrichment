@@ -31,7 +31,7 @@ studentRouter.post('/', function (req, res, next) {
     .catch(next);
 });
 
-// PUT /api/students
+// PUT /api/students/:studentId
 studentRouter.put('/:studentId', function (req, res, next) {
   const id = req.params.studentId;
 
