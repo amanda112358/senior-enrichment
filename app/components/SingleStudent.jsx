@@ -5,24 +5,25 @@ import { Link } from 'react-router-dom';
 
 function SingleStudent (props) {
 
-    const studentId = Number(props.match.params.studentId);
-    const selectedStudent = props.students.find(student => student.id === studentId);
-    console.log(selectedStudent);
-    return (
+    const { student } = props;
+
+    return student
+    ? (
       <div>
         <ul>
-          <li>Name: {selectedStudent.name}</li>
-          <li>Campus: <Link to={`/campuses/${selectedStudent.campus.id}`}>{selectedStudent.campus.name}</Link></li>
-          <li>GPA: {selectedStudent.gpa}</li>
+          <li>Name: {student.name}</li>
+          <li>Campus: <Link to={`/campuses/${student.campus.id}`}>{student.campus.name}</Link></li>
+          <li>GPA: {student.gpa}</li>
         </ul>
       </div>
     )
+    : <h1>Loading...</h1>
   }
 
-  const mapStateToProps = function (state) {
-
+  const mapStateToProps = function (state, ownProps) {
+    const studentId = Number(ownProps.match.params.studentId);
     return {
-      students: state.students
+      student: state.students.find(student => student.id === studentId)
     };
   }
 

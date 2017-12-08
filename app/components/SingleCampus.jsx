@@ -6,27 +6,27 @@ import Students from './Students';
 
 function SingleCampus (props) {
 
-  const campusId = Number(props.match.params.campusId);
-  const selectedCampus = props.campuses.find(campus => campus.id === campusId);
-  console.log('!!', campusId);
-  console.log(selectedCampus);
+  const { campus } = props;
 
-  return (
+  return campus
+  ? (
     <div>
       <ul>
-        <li>Selected Campus: {selectedCampus.name}</li>
-        <li>Description: {selectedCampus.description}</li>
+        <li>Selected Campus: {campus.name}</li>
+        <li>Description: {campus.description}</li>
       </ul>
-      <img src={`${selectedCampus.imgUrl}`} />
-      <Link to={`/campuses/${selectedCampus.id}/edit-campus`}>Edit</Link>
-      <Students students={selectedCampus.students} />
+      <img src={`${campus.imgUrl}`} />
+      <Link to={`/campuses/${campus.id}/edit-campus`}>Edit</Link>
+      <Students students={campus.students} />
     </div>
   )
+  : <h1>Loading...</h1>
 }
 
-const mapStateToProps = function (state) {
+const mapStateToProps = function (state, ownProps) {
+  const campusId = Number(ownProps.match.params.campusId);
   return {
-    campuses: state.campuses
+    campus: state.campuses.find(campus => campus.id === campusId)
   };
 }
 
