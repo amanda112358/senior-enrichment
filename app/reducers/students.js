@@ -43,13 +43,13 @@ export default function studentReducer (state = [], action) {
       return action.students;
 
     case GET_STUDENT:
-      return [...state.students, action.student];
+      return [...state, action.student];
 
     case DELETE_STUDENT: {
-      console.log('STATE', state);
       const studentToDelete = state.find(student => student.id === action.studentId);
       const indexOfStudent = state.indexOf(studentToDelete);
-      const newState = [...state.students].splice(indexOfStudent, 1);
+      let newState = [...state];
+      newState.splice(indexOfStudent, 1);
       return newState;
     }
 

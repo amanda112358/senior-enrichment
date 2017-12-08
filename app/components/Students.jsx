@@ -22,6 +22,7 @@ class Students extends Component {
     return (
       <div>
         <h1>Students</h1>
+        <Link to={`/new-student`}>Add New Student</Link>
         <ul>
           {students.map(student =>
           (<div key={student.id}>
