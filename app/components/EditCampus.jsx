@@ -1,44 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { writeCampusName, putCampus, writeCampusDescription } from '../reducers';
+import { putCampus, writeCampusName, writeCampusDescription } from '../reducers';
 import CampusForm from './CampusForm';
-import store from '../store';
 
 
-function EditCampus (props) {
-  const { campuses, handleSubmit } = props;
-  const campusId = Number(props.match.params.campusId);
-  const campusToEdit = campuses.find(campus => campus.id === campusId);
+class EditCampus extends Component {
 
-  store.dispatch(writeCampusName(campusToEdit.name));
-  store.dispatch(writeCampusDescription(campusToEdit.description));
+  componentDidMount() {
+    this.props.setInputToExisiting();
+  }
 
-  return (
-    <CampusForm
-      label={`Edit Campus`}kml0-
-      handleSubmit={handleSubmit}
-      buttonText={'Done'}
-    />
-  )
+  render() {
+    return (
+      <CampusForm
+        label={`Edit Campus`}
+        postOrPut={putCampus}
+        buttonText={'Done'}
+      />
+    )
+  }
 }
 
-const mapStateToProps = function (state) {
+const mapDispatchToProps = function (dispatch, ownProps) {
   return {
-    campuses: state.campuses
-  }
-};
-
-const mapDispatchToProps = function (dispatch) {
-  return {
-    handleSubmit (event) {
-      event.preventDefault();
-      const name = event.target.campusName.value;
-      const description = event.target.campusDescription.value;
-      dispatch(putCampus({ name, description }));
-      dispatch(writeCampusName(''));
-      dispatch(writeCampusDescription(''));
+    setInputToExisiting() {
+      // // const campusToEdit =
+      // dispatch(writeCampusName(campusToEdit.name));
+      // dispatch(writeCampusDescription(campusToEdit.description));
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditCampus);
+export default connect(null, mapDispatchToProps)(EditCampus);

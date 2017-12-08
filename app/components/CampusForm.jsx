@@ -57,7 +57,12 @@ const mapDispatchToProps = function (dispatch, ownProps) {
       if (field === 'campusDescription') dispatch(writeCampusDescription(input));
     },
     handleSubmit (event) {
-      return ownProps.handleSubmit(event);
+      event.preventDefault();
+      const name = event.target.campusName.value;
+      const description = event.target.campusDescription.value;
+      dispatch(ownProps.postOrPut({ name, description }));
+      dispatch(writeCampusName(''));
+      dispatch(writeCampusDescription(''));
     }
   };
 };
