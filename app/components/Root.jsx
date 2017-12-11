@@ -13,6 +13,7 @@ import NewCampus from './NewCampus';
 import EditCampus from './EditCampus';
 import NewStudent from './NewStudent';
 import EditStudent from './EditStudent';
+import Footer from './Footer';
 
 export default class Root extends Component {
 
@@ -42,6 +43,7 @@ export default class Root extends Component {
           <Route component={Home} />
 
         </Switch>
+        <Footer />
       </div>
     )
   }

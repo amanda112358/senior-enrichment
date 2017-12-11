@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-// ACTION TYPE
+// ACTION TYPES
 const WRITE_CAMPUS_NAME = 'WRITE_CAMPUS_NAME';
-const WRITE_CAMPUS_DESCRIPTIOIN = 'WRITE_CAMPUS_DESCRIPTION';
+const WRITE_CAMPUS_DESCRIPTION = 'WRITE_CAMPUS_DESCRIPTION';
 
-// ACTION CREATOR
+// ACTION CREATORS
 export const writeCampusName = (campusName) => {
   return {
     type: WRITE_CAMPUS_NAME,
@@ -14,7 +14,7 @@ export const writeCampusName = (campusName) => {
 
 export const writeCampusDescription = (campusDescription) => {
   return {
-    type: WRITE_CAMPUS_DESCRIPTIOIN,
+    type: WRITE_CAMPUS_DESCRIPTION,
     campusDescription
   }
 }
@@ -26,7 +26,7 @@ export default function campusEntryReducer (state = {}, action) {
     case WRITE_CAMPUS_NAME:
       return {...state, campusName: action.campusName};
 
-    case WRITE_CAMPUS_DESCRIPTIOIN:
+    case WRITE_CAMPUS_DESCRIPTION:
       return {...state, campusDescription: action.campusDescription};
 
     default:

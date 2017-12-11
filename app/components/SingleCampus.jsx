@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Students from './Students';
+import { destroyCampus } from '../reducers';
 
 
-function SingleCampus (props) {
+const SingleCampus = (props) => {
 
-  const { campus } = props;
+  const { campus, deleteCampus, history } = props;
 
   return campus
   ? (
@@ -17,17 +18,24 @@ function SingleCampus (props) {
         <li>Description: {campus.description}</li>
       </ul>
       <img src={`${campus.imgUrl}`} />
-      <Students students={campus.students} />
+      <Students campusId={campus.id} history={history}/>
+      <button onClick={() => deleteCampus(campus.id)}>Delete Campus</button>
     </div>
   )
   : <h1>Loading...</h1>
 }
 
-const mapStateToProps = function (state, ownProps) {
+const mapStateToProps = (state, ownProps) => {
   const campusId = Number(ownProps.match.params.campusId);
   return {
     campus: state.campuses.find(campus => campus.id === campusId)
   };
 }
 
-export default connect(mapStateToProps)(SingleCampus);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    deleteCampus: (campusId) => dispatch(destroyCampus(ownProps.history, campusId))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleCampus);

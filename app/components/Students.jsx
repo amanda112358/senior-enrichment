@@ -1,44 +1,43 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { destroyStudent } from '../reducers';
-import store from '../store'
 
-class Students extends Component {
-  constructor() {
-    super();
-    this.deleteStudent = this.deleteStudent.bind(this);
-  }
+const Students = (props) => {
 
-  deleteStudent(studentId) {
-    console.log(studentId);
-    store.dispatch(destroyStudent(studentId));
-  }
+  const { students, campusId, deleteStudent } = props;
+  const renderStudents = campusId ? students.filter(student => student.campusId === campusId) : students;
 
-  render() {
+  return (
+    <div>
+      <h1>Students</h1>
+      <Link to={`/new-student`}>Add New Student</Link>
+      <ul>
+        {
+          renderStudents.map(student => {
+            return (
+              <div key={student.id}>
+                <Link to={`/students/${student.id}`}>Name: {student.name}</Link>
+                <button key={student.id} onClick={() => deleteStudent(student.id)}>X</button>
+              </div>
+            )
+          })
+        }
+      </ul>
+    </div>
+  )
+}
 
-    const { students } = this.props;
+const mapStateToProps = function (state) {
+  return {
+    students: state.students
+  };
+}
 
-    return (
-      <div>
-        <h1>Students</h1>
-        <Link to={`/new-student`}>Add New Student</Link>
-        <ul>
-          {students.map(student =>
-          (<div key={student.id}>
-            <Link to={`/students/${student.id}`} >Name: {student.name}</Link>
-            <button key={student.id} onClick={() => this.deleteStudent(student.id)}>X</button>
-          </div>)
-          )}
-        </ul>
-      </div>
-    )
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    deleteStudent: (studentId) => dispatch(destroyStudent(ownProps.history, studentId))
   }
 }
 
-const mapStateToProps = function (state, ownProps) {
-  if (ownProps.students) return {students: ownProps.students};
-  else return {students: state.students};
-}
-
-export default connect(mapStateToProps)(Students);
+export default connect(mapStateToProps, mapDispatchToProps)(Students);

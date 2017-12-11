@@ -10,7 +10,8 @@ class CampusForm extends Component {
 
   render() {
     const {
-      campusEntry,
+      campusName,
+      campusDescription,
       label,
       handleChange,
       handleSubmit,
@@ -22,14 +23,14 @@ class CampusForm extends Component {
           <div>
             <label>{label}</label>
             <input
-              value={campusEntry.campusName}
+              value={campusName}
               onChange={handleChange}
               type="text"
               name="campusName"
               placeholder="Enter campus name"
             />
             <input
-              value={campusEntry.campusDescription}
+              value={campusDescription}
               onChange={handleChange}
               type="text"
               name="campusDescription"
@@ -48,7 +49,8 @@ class CampusForm extends Component {
 const mapStateToProps = function (state, ownProps) {
   return {
     campus: ownProps.campus,
-    campusEntry: state.campusEntry,
+    campusName: state.campusName,
+    campusDescription: state.campusDescription,
     label: ownProps.label,
     buttonText: ownProps.buttonText
   }
@@ -72,11 +74,14 @@ const mapDispatchToProps = function (dispatch, ownProps) {
       if (field === 'campusDescription') dispatch(writeCampusDescription(input));
     },
     handleSubmit (event) {
+      const { campus, postOrPut, history } = ownProps;
       event.preventDefault();
       const name = event.target.campusName.value;
       const description = event.target.campusDescription.value;
-      const campusId = ownProps.campus ? ownProps.campus.id : null;
-      dispatch(ownProps.postOrPut({ name, description }, campusId));
+      const campusId = campus ? campus.id : null;
+      console.log('OWNPROPS', ownProps);
+      const createOrEdit = postOrPut(history, { name, description }, campusId);
+      dispatch(createOrEdit);
       dispatch(writeCampusName(''));
       dispatch(writeCampusDescription(''));
     }

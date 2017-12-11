@@ -1,13 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Campuses from './Campuses'
+import { postStudent } from '../reducers';
+import StudentForm from './StudentForm';
 
 
-export default function NewStudent (props) {
-
+const NewStudent = (props) => {
   return (
-    <div>
-      <h1>Add new student!</h1>
-    </div>
+    <StudentForm
+      label={'New Student Information:'}
+      postOrPut={postStudent}
+      buttonText={'Submit New Student'}
+      history={props.history}
+    />
   )
 }
+
+export default NewStudent;

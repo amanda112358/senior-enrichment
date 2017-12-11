@@ -1,21 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { putCampus, writeCampusName, writeCampusDescription } from '../reducers';
+import { putCampus } from '../reducers';
 import CampusForm from './CampusForm';
 
 
-class EditCampus extends Component {
-
-  render() {
-    return (
-      <CampusForm
-        campus={this.props.campus}
-        label={`Edit Campus`}
-        postOrPut={putCampus}
-        buttonText={'Submit Changes'}
-      />
-    )
-  }
+const EditCampus = (props) => {
+  return (
+    <CampusForm
+      campus={this.props.campus}
+      label={`Edit Campus`}
+      postOrPut={putCampus}
+      buttonText={'Submit Changes'}
+      history={props.history}
+    />
+  )
 }
 
 const mapStateToProps = function (state, ownProps) {

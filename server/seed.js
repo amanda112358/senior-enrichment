@@ -3,22 +3,22 @@ const { db, Campus, Student } = require('./db/models');
 const campuses = [
   {
     name: 'Mars Campus',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/275px-OSIRIS_Mars_true_color.jpg',
+    imageUrl: '/images/mars.png',
     description: 'Really red up here!'
   },
   {
     name: 'Luna Campus',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/275px-OSIRIS_Mars_true_color.jpg',
+    imageUrl: '/images/luna.png',
     description: 'Luna: A place to reflect.'
   },
   {
     name: 'Terra Campus',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/275px-OSIRIS_Mars_true_color.jpg',
+    imageUrl: '/images/terra.png',
     description: 'The student here are very down-to-earth.'
   },
   {
     name: 'Titan Campus',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/275px-OSIRIS_Mars_true_color.jpg',
+    imageUrl: '/images/titan.png',
     description: 'Cool kids reside here.'
   }
 ];
@@ -48,6 +48,34 @@ const students = [
   {
     firstName: 'Owlie',
     lastName: 'Bear',
+    email: 'owlie@email.com',
+    gpa: 4.0,
+    campusId: 4
+  },
+  {
+    firstName: 'Mattie',
+    lastName: 'Hussey',
+    email: 'amanda@email.com',
+    gpa: 4.0,
+    campusId: 1
+  },
+  {
+    firstName: 'Reginald',
+    lastName: 'Flower',
+    email: 'andrey@email.com',
+    gpa: 2.0,
+    campusId: 2
+  },
+  {
+    firstName: 'Sierra',
+    lastName: 'Nevada',
+    email: 'riku@email.com',
+    gpa: 3.0,
+    campusId: 3
+  },
+  {
+    firstName: 'Fruit',
+    lastName: 'Bat',
     email: 'owlie@email.com',
     gpa: 4.0,
     campusId: 4

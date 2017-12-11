@@ -47,9 +47,9 @@ export default function studentReducer (state = [], action) {
 
     case DELETE_STUDENT: {
       const studentToDelete = state.find(student => student.id === action.studentId);
-      const indexOfStudent = state.indexOf(studentToDelete);
+      const indexOfStudentToDelete = state.indexOf(studentToDelete);
       let newState = [...state];
-      newState.splice(indexOfStudent, 1);
+      newState.splice(indexOfStudentToDelete, 1);
       return newState;
     }
 
@@ -87,7 +87,7 @@ export function postStudent (studentName, history) {
     }
 }
 
-export function destroyStudent (studentId, history) {
+export function destroyStudent (history, studentId) {
 
     return function thunk (dispatch) {
 
@@ -95,8 +95,9 @@ export function destroyStudent (studentId, history) {
         .then(() => {
           const action = deleteStudent(studentId);
           dispatch(action);
-          // socket.emit('new-student', newStudent);
-          // history.push(`/students/${newStudent.id}`);
+          const currentPath = history.location.pathname;
+          if (currentPath === '/students/') history.push(`/students/`);
+          if (currentPath.includes('campuses')) history.push(currentPath);
         });
     }
 }

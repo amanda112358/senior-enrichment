@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const GET_CAMPUSES = 'GET_CAMPUSES';
 const GET_CAMPUS = 'GET_CAMPUS';
+const DELETE_CAMPUS = 'DELETE_CAMPUS';
 
 // ACTION CREATORS
 
@@ -23,6 +24,13 @@ export const getCampus = (campus) => {
   }
 }
 
+export const deleteCampus = (campusId) => {
+  return {
+    type: DELETE_CAMPUS,
+    campusId
+  }
+}
+
 // THUNK CREATORS
 
 export function fetchCampuses () {
@@ -37,7 +45,7 @@ export function fetchCampuses () {
       }
   }
 
-export function postCampus (campusData) {
+export function postCampus (history, campusData) {
 
     return function thunk (dispatch) {
 
@@ -47,12 +55,12 @@ export function postCampus (campusData) {
           const action = getCampus(newCampus);
           dispatch(action);
           // socket.emit('new-student', newStudent);
-          // history.push(`/students/${newStudent.id}`);
+          history.push(`/campuses/${newCampus.id}`);
         });
     }
 }
 
-export function putCampus (campusData, campusId) {
+export function putCampus (history, campusData, campusId) {
 
     return function thunk (dispatch) {
 
@@ -61,8 +69,20 @@ export function putCampus (campusData, campusId) {
         .then(updatedCampus => {
           const action = getCampus(updatedCampus);
           dispatch(action);
-          // socket.emit('new-student', newStudent);
-          // history.push(`/students/${newStudent.id}`);
+          history.push(`/campuses/${updatedCampus.id}`);
+        });
+    }
+}
+
+export function destroyCampus (history, campusId) {
+
+    return function thunk (dispatch) {
+
+      return axios.delete(`/api/campuses/${campusId}`, {id: campusId})
+        .then(() => {
+          const action = deleteCampus(campusId);
+          dispatch(action);
+          history.push(`/campuses/`);
         });
     }
 }
@@ -79,6 +99,14 @@ export default function campusReducer (state = [], action) {
 
     case GET_CAMPUS:
       return [...state, action.campus];
+
+    case DELETE_CAMPUS: {
+      const campusToDelete = state.find(campus => campus.id === action.campusId);
+      const indexOfcampusToDelete = state.indexOf(campusToDelete);
+      let newState = [...state];
+      newState.splice(indexOfcampusToDelete, 1);
+      return newState;
+    }
 
     default:
       return state;

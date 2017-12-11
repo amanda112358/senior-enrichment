@@ -7,8 +7,7 @@ export default function Home (props) {
 
   return (
     <div>
-      <h1>Welcome Home!</h1>
-      <Link to={`/new-student`}>Add New Student</Link>
+      {/* <h6>Welcome to the Margaret Hamilton Interplanetary Academy of JavaScript.</h6> */}
       <Campuses />
     </div>
   )

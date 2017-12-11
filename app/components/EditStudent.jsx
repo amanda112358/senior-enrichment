@@ -1,13 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Campuses from './Campuses'
+import { connect } from 'react-redux';
+import { putStudent } from '../reducers';
+import StudentForm from './StudentForm';
 
 
-export default function EditStudent (props) {
-
+const EditStudent = (props) => {
   return (
-    <div>
-      <h1>Edit student!</h1>
-    </div>
+    <StudentForm
+      student={this.props.student}
+      label={`Edit Student`}
+      postOrPut={putStudent}
+      buttonText={'Submit Changes'}
+      history={props.history}
+    />
   )
 }
+
+const mapStateToProps = function (state, ownProps) {
+  const studentId = Number(ownProps.match.params.studentId);
+  const studentToEdit = state.students.find(student => student.id === studentId)
+  return {
+    student: studentToEdit
+  };
+};
+
+
+export default connect(mapStateToProps)(EditStudent);
