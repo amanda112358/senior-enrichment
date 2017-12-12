@@ -1,21 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 
 function SingleStudent (props) {
 
-    const { student } = props;
+    const { student, history } = props;
+    const navigateToEditStudent = () => history.push(`/students/${student.id}/edit-student`);
 
     return student
     ? (
-      <div>
-        <ul>
-          <li>Name: {student.name}</li>
-          <li>Campus: <Link to={`/campuses/${student.campus.id}`}>{student.campus.name}</Link></li>
-          <li>GPA: {student.gpa}</li>
-        </ul>
-        <Link to={`/students/${student.id}/edit-student`}>Edit</Link>
+      <div className="student-bio">
+        <div>
+          <h3>{student.name}</h3>
+          <h6><Link to={`/campuses/${student.campus.id}`}>{student.campus.name}</Link></h6>
+          <h6>{student.email}</h6>
+          <h6>GPA: {student.gpa}</h6>
+        </div>
+        <div className="button-container">
+          <button className="btn-main" onClick={navigateToEditStudent}>Edit</button>
+        </div>
       </div>
     )
     : <h1>Loading...</h1>
@@ -28,4 +32,4 @@ function SingleStudent (props) {
     };
   }
 
-  export default connect(mapStateToProps)(SingleStudent);
+  export default withRouter(connect(mapStateToProps)(SingleStudent));

@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const GET_CAMPUSES = 'GET_CAMPUSES';
 const GET_CAMPUS = 'GET_CAMPUS';
+const EDIT_CAMPUS = 'EDIT_CAMPUS';
 const DELETE_CAMPUS = 'DELETE_CAMPUS';
 
 // ACTION CREATORS
@@ -24,10 +25,17 @@ export const getCampus = (campus) => {
   }
 }
 
-export const deleteCampus = (campusId) => {
+export const editCampus = (campus) => {
+  return {
+    type: EDIT_CAMPUS,
+    campus
+  }
+}
+
+export const deleteCampus = (campus) => {
   return {
     type: DELETE_CAMPUS,
-    campusId
+    campus
   }
 }
 
@@ -54,7 +62,6 @@ export function postCampus (history, campusData) {
         .then(newCampus => {
           const action = getCampus(newCampus);
           dispatch(action);
-          // socket.emit('new-student', newStudent);
           history.push(`/campuses/${newCampus.id}`);
         });
     }
@@ -67,20 +74,20 @@ export function putCampus (history, campusData, campusId) {
       return axios.put(`/api/campuses/${campusId}`, campusData)
         .then(res => res.data)
         .then(updatedCampus => {
-          const action = getCampus(updatedCampus);
+          const action = editCampus(updatedCampus);
           dispatch(action);
           history.push(`/campuses/${updatedCampus.id}`);
         });
     }
 }
 
-export function destroyCampus (history, campusId) {
+export function destroyCampus (history, campus) {
 
     return function thunk (dispatch) {
 
-      return axios.delete(`/api/campuses/${campusId}`, {id: campusId})
+      return axios.delete(`/api/campuses/${campus.id}`, {id: campus.id})
         .then(() => {
-          const action = deleteCampus(campusId);
+          const action = deleteCampus(campus);
           dispatch(action);
           history.push(`/campuses/`);
         });
@@ -99,6 +106,14 @@ export default function campusReducer (state = [], action) {
 
     case GET_CAMPUS:
       return [...state, action.campus];
+
+    case EDIT_CAMPUS: {
+      const campusToEdit = state.find(campus => campus.id === action.campus.id);
+      const indexOfcampusToEdit = state.indexOf(campusToEdit);
+      let newState = [...state];
+      newState.splice(indexOfcampusToEdit, 1, action.campus);
+      return newState;
+    }
 
     case DELETE_CAMPUS: {
       const campusToDelete = state.find(campus => campus.id === action.campusId);

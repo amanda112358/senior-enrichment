@@ -31,19 +31,18 @@ export default class Root extends Component {
         <Switch>
 
           <Route exact path="/campuses" component={Campuses} />
+          <Route exact path="/campuses/new-campus" component={NewCampus} />
           <Route exact path="/campuses/:campusId" component={SingleCampus} />
-          <Route exact path="/new-campus" component={NewCampus} />
           <Route exact path="/campuses/:campusId/edit-campus" component={EditCampus} />
 
           <Route exact path="/students" component={Students} />
           <Route exact path="/students/:studentId" component={SingleStudent} />
-          <Route exact path="/new-student" component={NewStudent} />
+          <Route exact path="/campuses/:campusId/new-student" component={NewStudent} />
           <Route exact path="/students/:studentId/edit-student" component={EditStudent} />
 
           <Route component={Home} />
 
         </Switch>
-        <Footer />
       </div>
     )
   }

@@ -4,22 +4,31 @@ import { Link, withRouter } from 'react-router-dom';
 import Students from './Students';
 import { destroyCampus } from '../reducers';
 
-
 const SingleCampus = (props) => {
 
-  const { campus, deleteCampus, history } = props;
+  const { campus, confirmDelete, history } = props;
+
+  const navigateToNewStudent = () => history.push(`/campuses/${campus.id}/new-student`);
+  const navigateToEditCampus = () => history.push(`/campuses/${campus.id}/edit-campus`);
 
   return campus
   ? (
-    <div>
-      <Link to={`/campuses/${campus.id}/edit-campus`}>Edit</Link>
-      <ul>
-        <li>Selected Campus: {campus.name}</li>
-        <li>Description: {campus.description}</li>
-      </ul>
-      <img src={`${campus.imgUrl}`} />
-      <Students campusId={campus.id} history={history}/>
-      <button onClick={() => deleteCampus(campus.id)}>Delete Campus</button>
+    <div className="campus-container">
+      <div className="campus-bio">
+          <img src={`${campus.imageUrl}`} />
+          <h3>{campus.name}</h3>
+        <div className="campus-description">
+          <span>{campus.description}</span>
+        </div>
+      </div>
+      <Students campus={campus} history={history} />
+      <div className="buttons-container">
+        <button className="btn-add-new-student" onClick={navigateToNewStudent}>+ New Student</button>
+        <div>
+          <button className="btn-main" onClick={navigateToEditCampus}>Edit Campus</button>
+          <button className="btn-main" onClick={() => confirmDelete(campus)}>Delete Campus</button>
+        </div>
+      </div>
     </div>
   )
   : <h1>Loading...</h1>
@@ -34,8 +43,11 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    deleteCampus: (campusId) => dispatch(destroyCampus(ownProps.history, campusId))
+    confirmDelete: (campus) => {
+      const confirmDelete = `Are you sure you want to remove all records of ${campus.name}, including its students?`;
+      if (confirm(confirmDelete)) dispatch(destroyCampus(ownProps.history, campus))
+    }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SingleCampus);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleCampus));

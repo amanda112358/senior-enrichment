@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { writestudentName, writestudentDescription } from '../reducers';
+import {
+  writeStudentFirstName,
+  writeStudentLastName,
+  writeStudentEmail,
+  writeStudentGPA,
+  selectStudentCampus,
+  postStudent,
+  putStudent } from '../reducers';
 
 class StudentForm extends Component {
 
   componentDidMount(){
-    this.props.setInput(this.props.student);
+    this.props.setInput();
   }
 
   render() {
@@ -14,16 +21,19 @@ class StudentForm extends Component {
       lastName,
       email,
       gpa,
+      campuses,
+      campusId,
       label,
+      buttonText,
       handleChange,
-      handleSubmit,
-      buttonText } = this.props;
+      handleSubmit } = this.props;
 
     return (
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>{label}</label>
+      <form onSubmit={handleSubmit} className="form-horizontal">
+
+        <div className="form-group">
+          <label className="control-label">First Name</label>
+          <div className="col-sm-10">
             <input
               value={firstName}
               onChange={handleChange}
@@ -31,6 +41,12 @@ class StudentForm extends Component {
               name="firstName"
               placeholder="First Name"
             />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label className="control-label">Last Name</label>
+          <div className="col-sm-10">
             <input
               value={lastName}
               onChange={handleChange}
@@ -38,6 +54,12 @@ class StudentForm extends Component {
               name="lastName"
               placeholder="Last Name"
             />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label className="control-label">Email</label>
+          <div className="col-sm-10">
             <input
               value={email}
               onChange={handleChange}
@@ -45,6 +67,12 @@ class StudentForm extends Component {
               name="email"
               placeholder="e-mail"
             />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label className="control-label">GPA</label>
+          <div className="col-sm-10">
             <input
               value={gpa}
               onChange={handleChange}
@@ -52,54 +80,92 @@ class StudentForm extends Component {
               name="gpa"
               placeholder="GPA"
             />
+          </div>
+        </div>
 
+        <div className="form-group">
+          <label className="control-label">Campus</label>
+          <div className="col-sm-10">
+            <select
+              name="campus"
+              onChange={handleChange}
+              value={campusId}>
+              {
+                campuses.map(campus => {
+                  return (
+                      <option key={campus.id} value={campus.id}>{campus.name}</option>
+                  )
+                })
+              }
+            </select>
           </div>
-          <div>
-            <button type="submit">{buttonText}</button>
-          </div>
-        </form>
-      </div>
+        </div>
+
+        <button type="submit" className="btn-main">{buttonText}</button>
+
+      </form>
     )
   }
 }
 
-const mapStateToProps = function (state, ownProps) {
+const mapStateToProps = function (state) {
   return {
-    student: ownProps.student,
-    firstName: state.firstName,
-    lastName: state.lastName,
-    email: state.email,
-    gpa: state.gpa,
-    label: ownProps.label,
-    buttonText: ownProps.buttonText
+    firstName: state.studentEntry.firstName,
+    lastName: state.studentEntry.lastName,
+    email: state.studentEntry.email,
+    gpa: state.studentEntry.gpa,
+    campusId: state.studentEntry.campusId,
+    campuses: state.campuses
   }
 };
 
 const mapDispatchToProps = function (dispatch, ownProps) {
+
+  const { student, history } = ownProps;
+
   return {
     setInput() {
-      if (ownProps.student) { // edit exisiting student
-        dispatch(writestudentName(ownProps.student.name));
-        dispatch(writestudentDescription(ownProps.student.description));
+      if (student) { // edit exisiting student
+        dispatch(writeStudentFirstName(student.firstName));
+        dispatch(writeStudentLastName(student.lastName));
+        dispatch(writeStudentEmail(student.email));
+        dispatch(writeStudentGPA(student.gpa));
       } else { // create new student
-        dispatch(writestudentName(''));
-        dispatch(writestudentDescription(''));
+        dispatch(writeStudentFirstName(''));
+        dispatch(writeStudentLastName(''));
+        dispatch(writeStudentEmail(''));
+        dispatch(writeStudentGPA(''));
       }
     },
     handleChange (event) {
-      const input = event.target.value;
       const field = event.target.name;
-      if (field === 'studentName') dispatch(writestudentName(input));
-      if (field === 'studentDescription') dispatch(writestudentDescription(input));
+      const input = event.target.value;
+      if (field === 'firstName') dispatch(writeStudentFirstName(input));
+      if (field === 'lastName') dispatch(writeStudentLastName(input));
+      if (field === 'email') dispatch(writeStudentEmail(input));
+      if (field === 'gpa') dispatch(writeStudentGPA(input));
+      if (field === 'campus') dispatch(selectStudentCampus(input));
     },
     handleSubmit (event) {
       event.preventDefault();
-      const name = event.target.studentName.value;
-      const description = event.target.studentDescription.value;
-      const studentId = ownProps.student ? ownProps.student.id : null;
-      dispatch(ownProps.postOrPut({ name, description }, studentId));
-      dispatch(writestudentName(''));
-      dispatch(writestudentDescription(''));
+
+      const firstName = event.target.firstName.value;
+      const lastName = event.target.lastName.value;
+      const email = event.target.email.value;
+      const gpa = +event.target.gpa.value;
+      const campusId = event.target.campus.value;
+
+      if (student) {
+        const editStudent = putStudent(history, { firstName, lastName, email, gpa, campusId }, student.id)
+        dispatch(editStudent);
+      } else {
+        const createStudent = postStudent(history, { firstName, lastName, email, gpa, campusId })
+        dispatch(createStudent);
+      }
+      // dispatch(writeStudentFirstName(''));
+      // dispatch(writeStudentLastName(''));
+      // dispatch(writeStudentEmail(''));
+      // dispatch(writeStudentGPA(''));
     }
   };
 };

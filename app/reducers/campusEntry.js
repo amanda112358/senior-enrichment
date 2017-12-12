@@ -19,8 +19,13 @@ export const writeCampusDescription = (campusDescription) => {
   }
 }
 
+const initialState = {
+  campusName: '',
+  campusDescription: ''
+};
+
 // REDUCER
-export default function campusEntryReducer (state = {}, action) {
+export default function campusEntryReducer (state = initialState, action) {
   switch(action.type) {
 
     case WRITE_CAMPUS_NAME:

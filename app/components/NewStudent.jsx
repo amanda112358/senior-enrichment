@@ -10,6 +10,7 @@ const NewStudent = (props) => {
       postOrPut={postStudent}
       buttonText={'Submit New Student'}
       history={props.history}
+      campusId={props.match.params.campusId}
     />
   )
 }

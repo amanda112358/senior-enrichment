@@ -2,6 +2,21 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: rgb(9, 9, 9);
+  color: white;
+}
+
+#footer {
+  bottom: 0;
+  width: 100%;
+  font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
 .navbar-container {
   display: flex;
   justify-content: flex-end;
@@ -13,12 +28,17 @@
 }
 
 a {
-  color: lightgray;
+  color: white;
 }
 
 a:hover {
   text-decoration: none;
   color: lightgreen;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
 }
 
 .campuses-container {
@@ -27,13 +47,11 @@ a:hover {
   justify-content: center;
 }
 
-.new-campus-link-container {
+.button-container {
   display: flex;
-  justify-content: center;
-}
-
-.new-campus-link {
   padding: 1em;
+  margin-bottom: 4em;
+  justify-content: center;
 }
 
 .campus {
@@ -62,14 +80,94 @@ a:hover {
   transform: translate(-0.25em, 0);
 }
 
-body {
-  background-color: rgb(9, 9, 9);
+.campus-container {
+  display: flex;
+  margin: 1em;
+  padding: 1em;
+  flex-direction: column;
+}
+
+.campus-bio {
+  display: flex;
+  padding: 1em;
+  margin: 1em 12em;
+  border-radius: 1em;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.campus-bio h3 {
+  display: flex;
+  justify-content: center;
+}
+
+.campus-bio img {
+  padding: 1em;
+  margin: 0 1em 1em 1em;
+  display: flex;
+  justify-content: center;
+  width: calc(128px + 2em);
+  align-self: center;
+}
+
+.campus-description {
+  display: flex;
+  justify-content: center;
+  border-radius: 1em;
+  font-size: 14px;
+}
+
+.students-container {
+  display: flex;
+  background-color: rgb(94, 92, 92);
+  flex-direction: column;
+  justify-content: center;
+  padding: 2em;
+  margin: 4em;
+  border-radius: 1em;
+}
+
+.buttons-container {
+  display: flex;
+  padding: 0 4em 4em 4em;
+  margin: 0 1em;
+  justify-content: space-between;
+}
+
+.btn-remove-student {
+  background-color: rgb(199, 60, 60);
+  color: white;
+  border-radius: 50%;
+  font-size: 9px;
+}
+
+.btn-add-new-student {
+  background-color: rgb(83, 174, 83);
   color: white;
 }
 
-#footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  font-size: 12px;
+.btn-main {
+  background-color: darkslateblue;
+  color: white;
+  margin: 0 1em;
+}
+
+.student-bio {
+  display: flex;
+  margin: 1em;
+  padding: 1em;
+  flex-direction: column;
+}
+
+.student-bio h3 {
+  text-align: center;
+}
+
+.student-bio h6 {
+  text-align: center;
+}
+
+.form-horizontal {
+  padding: 1em;
+  margin: 1em;
 }

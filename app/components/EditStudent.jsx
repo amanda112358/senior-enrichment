@@ -7,11 +7,12 @@ import StudentForm from './StudentForm';
 const EditStudent = (props) => {
   return (
     <StudentForm
-      student={this.props.student}
+      student={props.student}
       label={`Edit Student`}
       postOrPut={putStudent}
       buttonText={'Submit Changes'}
       history={props.history}
+      campusId={props.match.params.campusId}
     />
   )
 }

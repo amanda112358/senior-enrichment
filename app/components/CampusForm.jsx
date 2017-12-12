@@ -1,91 +1,106 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { writeCampusName, writeCampusDescription } from '../reducers';
+// import { withRouter } from 'react-router-dom';
+import { postCampus, putCampus, writeCampusName, writeCampusDescription } from '../reducers';
 
 class CampusForm extends Component {
 
   componentDidMount(){
-    this.props.setInput(this.props.campus);
+    this.props.setInput();
   }
 
   render() {
+
     const {
+      label,
+      buttonText,
       campusName,
       campusDescription,
-      label,
       handleChange,
-      handleSubmit,
-      buttonText } = this.props;
+      handleSubmit } = this.props;
 
     return (
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>{label}</label>
+      <form onSubmit={handleSubmit} className="form-horizontal">
+
+        <div className="form-group">
+          <label className="control-label">Campus Name</label>
+          <div className="col-sm-10">
             <input
               value={campusName}
               onChange={handleChange}
               type="text"
-              name="campusName"
+              name="name"
               placeholder="Enter campus name"
+              className="form-control"
             />
-            <input
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label className="control-label">Campus Description</label>
+          <div className="col-sm-10">
+            <textarea
               value={campusDescription}
               onChange={handleChange}
               type="text"
-              name="campusDescription"
+              name="description"
               placeholder="Enter campus description"
+              className="form-control"
             />
           </div>
-          <div>
-            <button type="submit">{buttonText}</button>
-          </div>
-        </form>
-      </div>
+        </div>
+
+        <div>
+          <button type="submit" className="btn-main">{buttonText}</button>
+        </div>
+
+      </form>
     )
   }
 }
 
-const mapStateToProps = function (state, ownProps) {
+const mapStateToProps = (state) => {
   return {
-    campus: ownProps.campus,
-    campusName: state.campusName,
-    campusDescription: state.campusDescription,
-    label: ownProps.label,
-    buttonText: ownProps.buttonText
+    campusName: state.campusEntry.campusName,
+    campusDescription: state.campusEntry.campusDescription
   }
-};
+}
 
-const mapDispatchToProps = function (dispatch, ownProps) {
+const mapDispatchToProps = (dispatch, ownProps) => {
+
+  const { campusToEdit, history } = ownProps;
+
   return {
-    setInput() {
-      if (ownProps.campus) {
-        dispatch(writeCampusName(ownProps.campus.name));
-        dispatch(writeCampusDescription(ownProps.campus.description));
+    setInput: () => {
+      if (campusToEdit) {
+        dispatch(writeCampusName(campusToEdit.name));
+        dispatch(writeCampusDescription(campusToEdit.description));
       } else {
         dispatch(writeCampusName(''));
         dispatch(writeCampusDescription(''));
       }
     },
-    handleChange (event) {
+    handleChange: (event) => {
       const input = event.target.value;
       const field = event.target.name;
-      if (field === 'campusName') dispatch(writeCampusName(input));
-      if (field === 'campusDescription') dispatch(writeCampusDescription(input));
+      if (field === 'name') dispatch(writeCampusName(input));
+      if (field === 'description') dispatch(writeCampusDescription(input));
     },
-    handleSubmit (event) {
-      const { campus, postOrPut, history } = ownProps;
+    handleSubmit: (event) => {
       event.preventDefault();
-      const name = event.target.campusName.value;
-      const description = event.target.campusDescription.value;
-      const campusId = campus ? campus.id : null;
-      console.log('OWNPROPS', ownProps);
-      const createOrEdit = postOrPut(history, { name, description }, campusId);
-      dispatch(createOrEdit);
+      const name = event.target.name.value;
+      const description = event.target.description.value;
+      if (campusToEdit) { // if campus passed as props, then must be editing existing campus
+        const editCampus = putCampus(history, { name, description }, campusToEdit.id);
+        dispatch(editCampus);
+      } else { // if no campus passed as props, then must be creating new campus
+        const createCampus = postCampus(history, { name, description });
+        dispatch(createCampus);
+      }
       dispatch(writeCampusName(''));
       dispatch(writeCampusDescription(''));
     }
-  };
-};
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(CampusForm);

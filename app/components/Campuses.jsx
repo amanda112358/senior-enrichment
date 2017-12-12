@@ -1,13 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 // import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 function Campuses (props) {
+
+  const { campuses, history } = props;
+  const navigateToNewCampus = () => history.push(`/campuses/new-campus`);
+
   return (
-    <div>
+    <div className="home">
       <div className="campuses-container">
-      {props.campuses.map(campus =>
+      {campuses.map(campus =>
         <div key={campus.id} className="campus">
           <Link to={`/campuses/${campus.id}`}>
             <img src={`${campus.imageUrl}`} />
@@ -16,8 +20,8 @@ function Campuses (props) {
         </div>
       )}
       </div>
-      <div className="new-campus-link-container">
-        <Link className="new-campus-link" to={`/new-campus`}>Add New Campus</Link>
+      <div className="button-container">
+        <button className="btn-main" onClick={navigateToNewCampus}>Add New Campus</button>
       </div>
     </div>
   )
@@ -29,4 +33,4 @@ const mapStateToProps = function (state) {
   };
 }
 
-export default connect(mapStateToProps)(Campuses);
+export default withRouter(connect(mapStateToProps)(Campuses));

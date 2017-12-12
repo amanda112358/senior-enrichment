@@ -5,6 +5,7 @@ const WRITE_STUDENT_FIRST_NAME = 'WRITE_STUDENT_FIRST_NAME';
 const WRITE_STUDENT_LAST_NAME = 'WRITE_STUDENT_LAST_NAME';
 const WRITE_STUDENT_EMAIL = 'WRITE_STUDENT_EMAIL';
 const WRITE_STUDENT_GPA = 'WRITE_STUDENT_GPA';
+const SELECT_STUDENT_CAMPUS = 'SELECT_STUDENT_CAMPUS';
 
 // ACTION CREATORS
 export const writeStudentFirstName = (firstName) => {
@@ -35,8 +36,23 @@ export const writeStudentGPA = (gpa) => {
   }
 }
 
+export const selectStudentCampus = (campusId) => {
+  return {
+    type: SELECT_STUDENT_CAMPUS,
+    campusId
+  }
+}
+
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  gpa: '',
+  campusId: ''
+};
+
 // REDUCER
-export default function campusEntryReducer (state = {}, action) {
+export default function campusEntryReducer (state = initialState, action) {
   switch(action.type) {
 
     case WRITE_STUDENT_FIRST_NAME:
@@ -50,6 +66,9 @@ export default function campusEntryReducer (state = {}, action) {
 
     case WRITE_STUDENT_GPA:
       return {...state, gpa: action.gpa};
+
+    case SELECT_STUDENT_CAMPUS:
+      return {...state, campusId: action.campusId}
 
     default:
       return state;
